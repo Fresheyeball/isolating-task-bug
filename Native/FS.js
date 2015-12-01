@@ -22,14 +22,16 @@ Elm.Native.FS.make = function (localRuntime) {
     });
 
   const readFileAndLog = function (path) {
-      fs.readFile(path, function(err, data){
-        if(err){
-          throw err;
-        }else{
-          console.log("data: ", data);
-        }        
+      return Task.asyncFunction(function (callback){
+        fs.readFile(path, function(err, data){
+          if(err){
+            throw err;
+          }else{
+            console.log("data: ", data);
+          }
+          callback(Task.succeed(Utils.Tuple0));
+        });
       });
-      return Task.succeed(Utils.Tuple0);
     };
 
   return localRuntime.Native.FS.values = {
